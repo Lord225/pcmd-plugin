@@ -1,0 +1,8 @@
+name: PCMD
+version: '1.0'
+main: pl.redstonefun.pcmd.PCMD
+api-version: '1.21'
+prefix: PCMD
+authors: [ BrzechiX ]
+description: PCMD
+website: redstonefun.pl
