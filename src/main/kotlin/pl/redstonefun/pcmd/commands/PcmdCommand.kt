@@ -23,39 +23,12 @@ class PcmdCommand(private val plugin: PCMD) : Command("pcmd") {
         usageMessage = "/hello"
     }
 
-    companion object {
-        val PCMD_KEY = NamespacedKey("pcmd", "pcmd")
-    }
-//
-//    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
-//        if (sender !is Player) return false
-//        if (args.isEmpty()) {
-//            sender.sendMessage("§cUżycie: /pcmd <tekst>")
-//            return true
-//        }
-//
-////        val loreText = args.joinToString(" ")
-////        val item = ItemStack(Material.GOLD_BLOCK)
-////        val meta = item.itemMeta as ItemMeta
-////
-////        // Ustawienie nazwy i dodanie `PersistentData` z `NamespacedKey`
-////        meta.setDisplayName("PCMD")
-////        meta.persistentDataContainer.set(PCMD_KEY, PersistentDataType.STRING, loreText)
-////        item.itemMeta = meta
-////
-////        // Dodanie przedmiotu do ekwipunku gracza
-////        sender.inventory.addItem(item)
-////        sender.sendMessage("§aDodano blok PCMD do twojego ekwipunku.")
-////        return true
-//
-//        return true
-//    }
-
     fun usageMessage() = Component.text("Użycie: /pcmd all/me <tekst>").color(NamedTextColor.RED)
 
     fun sanitzeText(text: Component): Component {
         // remove all events that can run commands
         text.clickEvent(null)
+        // TODO sanitze hover effect only if not text
         text.hoverEvent(null)
         for (event in text.children()) {
             sanitzeText(event)
@@ -95,7 +68,7 @@ class PcmdCommand(private val plugin: PCMD) : Command("pcmd") {
         }
 
         val selector = when(args[0]) {
-            "all" -> "@a[r=100]"
+            "all" -> "@a[r=..100]"
             "me" -> sender.name
             else -> {
                 sender.sendMessage(usageMessage())
@@ -121,7 +94,8 @@ class PcmdCommand(private val plugin: PCMD) : Command("pcmd") {
         val item = ItemStack(Material.GOLD_BLOCK).apply {
             itemMeta = itemMeta?.also { meta ->
                 meta.displayName(sanitizedMessage)
-                meta.persistentDataContainer.set(PCMD_KEY, PersistentDataType.STRING, command)
+                meta.persistentDataContainer.set(PCMD.PCMD_KEY_TELLRAW, PersistentDataType.STRING, command)
+                meta.persistentDataContainer.set(PCMD.PCMD_KEY_ORIGINAL, PersistentDataType.STRING, "/pcmd $selector $rawText")
             }
         }
 

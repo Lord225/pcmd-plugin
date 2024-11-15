@@ -1,37 +1,41 @@
 package pl.redstonefun.pcmd.listeners
 
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
+import org.bukkit.block.CommandBlock
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockPlaceEvent
+import org.bukkit.persistence.PersistentDataType
+import org.bukkit.Material
+import org.bukkit.event.block.BlockBreakEvent
 import pl.redstonefun.pcmd.PCMD
 
-class BlockPlaceListener(private val plugin: PCMD) : Listener {
 
+class BlockPlaceListener(private val plugin: PCMD) : Listener {
     @EventHandler
     fun onBlockPlace(event: BlockPlaceEvent) {
         println("BlockPlaceEvent $event");
-//        val player = event.player
-//        val item = event.itemInHand
-//        val meta = item.itemMeta ?: return
-//
-//        // Sprawdzenie, czy jest to blok PCMD
-//        if (meta.displayName == "PCMD" && meta.persistentDataContainer.has(PCMD.PCMD_KEY, PersistentDataType.STRING)) {
-//            val loreText = meta.persistentDataContainer.get(PCMD.PCMD_KEY, PersistentDataType.STRING) ?: return
-//
-//            // Anulowanie zdarzenia, by zablokować blok złota
-//            event.isCancelled = true
-//
-//            // Ustawienie bloku jako COMMAND_BLOCK bez ponownego przypisywania `val`
-//            val block = event.block
-//            block.type = Material.COMMAND_BLOCK
-//
-//            // Aktualizacja stanu CommandBlock
-//            val commandBlockState = block.state as? CommandBlock ?: return
-//            commandBlockState.name = "PCMD"
-//            commandBlockState.command = "/sendp ${player.name} $loreText"
-//            commandBlockState.update(true, false)
-//
-//            player.sendMessage("§aStworzono blok PCMD.")
-//        }
+        val player = event.player
+        val item = event.itemInHand
+        val meta = item.itemMeta ?: return
+
+        val command = meta.persistentDataContainer.get(PCMD.PCMD_KEY_TELLRAW, PersistentDataType.STRING) ?: return
+        val original = meta.persistentDataContainer.get(PCMD.PCMD_KEY_ORIGINAL, PersistentDataType.STRING) ?: return
+
+        if(!(command.startsWith("/tellraw"))) {
+            player.sendMessage(Component.text("Niepoprawny blok PCMD!").color(NamedTextColor.RED))
+            return
+        }
+
+        val block = event.block
+        block.type = Material.COMMAND_BLOCK
+
+        val commandBlockState = block.state as? CommandBlock ?: return
+        commandBlockState.setCommand(command)
+        commandBlockState.persistentDataContainer.set(PCMD.PCMD_KEY_ORIGINAL, PersistentDataType.STRING, original)
+        commandBlockState.update()
+
+        player.sendMessage(Component.text("Postawiłeś blok PCMD.").color(NamedTextColor.GREEN))
     }
 }
