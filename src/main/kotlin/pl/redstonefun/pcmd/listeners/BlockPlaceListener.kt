@@ -27,7 +27,7 @@ class BlockPlaceListener : Listener {
         }
 
         if(!(command.startsWith("/tellraw"))) {
-            player.sendMessage(Component.text("This pcmd block is invalid").color(NamedTextColor.RED))
+            player.sendMessage(Component.text("This PCMD block is invalid").color(NamedTextColor.RED))
             return
         }
 
