@@ -20,10 +20,10 @@ class PcmdCommand : Command("pcmd") {
 
     init {
         description = "Creates PCMD block"
-        usageMessage = "/pcmd all/me <tekst>"
+        usageMessage = "/pcmd all/me <text>"
     }
 
-    fun usageMessage() = Component.text("Use: /pcmd all/me <tekst/legacy/tellarawjson>").color(NamedTextColor.RED)
+    fun usageMessage() = Component.text("Use: /pcmd all/me <text/legacy/tellarawjson>").color(NamedTextColor.RED)
 
     fun sanitzeText(text: Component): Component {
         // remove all events that can run commands
@@ -116,7 +116,7 @@ class PcmdCommand : Command("pcmd") {
             itemMeta = itemMeta?.also { meta ->
                 meta.displayName(sanitizedMessage)
                 meta.persistentDataContainer.set(PCMD.PCMD_KEY_TELLRAW, PersistentDataType.STRING, command)
-                meta.persistentDataContainer.set(PCMD.PCMD_KEY_ORIGINAL, PersistentDataType.STRING, "/pcmd $selector $rawText")
+                meta.persistentDataContainer.set(PCMD.PCMD_KEY_ORIGINAL, PersistentDataType.STRING, "/pcmd ${args.joinToString(" ")}")
             }
         }
 

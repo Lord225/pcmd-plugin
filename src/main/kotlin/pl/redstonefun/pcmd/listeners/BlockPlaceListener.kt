@@ -37,6 +37,7 @@ class BlockPlaceListener : Listener {
         val commandBlockState = block.state as? CommandBlock ?: return
         commandBlockState.setCommand(command)
         commandBlockState.persistentDataContainer.set(PCMD.PCMD_KEY_ORIGINAL, PersistentDataType.STRING, original)
+        commandBlockState.persistentDataContainer.set(PCMD.PCMD_KEY_USER, PersistentDataType.STRING, player.name)
         commandBlockState.update()
     }
 }

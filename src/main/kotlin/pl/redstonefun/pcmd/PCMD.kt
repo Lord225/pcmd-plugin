@@ -12,6 +12,7 @@ class PCMD : JavaPlugin() {
     companion object {
         val PCMD_KEY_TELLRAW = NamespacedKey("pcmd", "tellraw")
         val PCMD_KEY_ORIGINAL = NamespacedKey("pcmd", "pcmd")
+        val PCMD_KEY_USER = NamespacedKey("pcmd", "user")
 
         val PERMISSION_USE_ME = "rf2.pcmd.me"
         val PERMISSION_USE_ALL = "rf2.pcmd.all"

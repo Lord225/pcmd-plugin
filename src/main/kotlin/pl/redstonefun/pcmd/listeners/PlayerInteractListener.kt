@@ -31,8 +31,14 @@ class PlayerInteractListener : Listener {
         val block = event.clickedBlock.takeIf { it?.type == Material.COMMAND_BLOCK } ?: return
         val commandBlock = (block.state as? CommandBlock) ?: return
         val original = commandBlock.persistentDataContainer.get(PCMD.PCMD_KEY_ORIGINAL, PersistentDataType.STRING) ?: return
+        val user = commandBlock.persistentDataContainer.get(PCMD.PCMD_KEY_USER, PersistentDataType.STRING) ?: return
 
         if (event.action == Action.LEFT_CLICK_BLOCK) {
+            if (event.player.name != user && event.player.hasPermission(PCMD.PERMISSION_USE_ALL).not()) {
+                event.player.sendMessage(Component.text("This pcmd block was created by $user").color(NamedTextColor.RED))
+                return
+            }
+
             commandBlock.persistentDataContainer.remove(PCMD.PCMD_KEY_ORIGINAL)
             block.type = Material.AIR
             commandBlock.update()
