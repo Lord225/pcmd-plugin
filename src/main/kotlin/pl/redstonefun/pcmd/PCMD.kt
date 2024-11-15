@@ -13,23 +13,24 @@ class PCMD : JavaPlugin() {
         val PCMD_KEY_TELLRAW = NamespacedKey("pcmd", "tellraw")
         val PCMD_KEY_ORIGINAL = NamespacedKey("pcmd", "pcmd")
 
+        val PERMISSION_USE_ME = "rf2.pcmd.me"
         val PERMISSION_USE_ALL = "rf2.pcmd.all"
     }
 
     override fun onEnable() {
         server.pluginManager.apply {
-            registerEvents(BlockPlaceListener(this@PCMD), this@PCMD)
-            registerEvents(PlayerInteractListener(this@PCMD), this@PCMD)
+            registerEvents(BlockPlaceListener(), this@PCMD)
+            registerEvents(PlayerInteractListener(), this@PCMD)
         }
 
         getCommandMap().apply {
-            register("pcmd", PcmdCommand()
+            register("pcmd", PcmdCommand())
         }
 
-        logger.info("Siema! Plugin działa.")
+        logger.info("PCMD włączony. Cześć!")
     }
 
     override fun onDisable() {
-        logger.info("Plugin wyłączony. Nara!")
+        logger.info("PCMD wyłączony. Nara!")
     }
 }

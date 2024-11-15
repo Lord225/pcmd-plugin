@@ -17,12 +17,12 @@ import pl.redstonefun.pcmd.PCMD
 class PlayerInteractListener : Listener {
 
     fun feedbackMessage(originalCommand: String): Component {
-        val clickEvent = Component.text("Kliknij aby skopiować")
+        val clickEvent = Component.text("Click to copy")
             .clickEvent(ClickEvent.copyToClipboard(originalCommand))
             .color(NamedTextColor.YELLOW)
             .decorate(TextDecoration.UNDERLINED)
 
-        return Component.text("Usunięto blok PCMD. ")
+        return Component.text("pcmd block removed. ")
                 .color(NamedTextColor.RED)
                 .append(clickEvent)
     }
@@ -37,23 +37,8 @@ class PlayerInteractListener : Listener {
             block.type = Material.AIR
             commandBlock.update()
 
-            // Create and send the clickable message
             event.player.sendMessage(feedbackMessage(original))
         }
-
-////        AnvilGUI.Builder()
-////            .onComplete { player: Player, text: String ->  // Określamy typy jawnie
-////                commandBlock.command = "/sendp $targetName $text"
-////                commandBlock.update()
-////                player.sendMessage("§aZaktualizowano wiadomość w bloku PCMD.")
-////                AnvilGUI.Response.close()
-////            }
-////            .onClose { player: Player ->  // Określamy typ jawnie
-////                player.sendMessage("§cZamknięto edycję bloku PCMD.")
-////            }
-////            .text(message)
-////            .plugin(plugin)
-////            .open(event.player)
     }
 
 

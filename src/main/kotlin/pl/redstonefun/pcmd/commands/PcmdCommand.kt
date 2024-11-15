@@ -23,7 +23,7 @@ class PcmdCommand : Command("pcmd") {
         usageMessage = "/pcmd all/me <tekst>"
     }
 
-    fun usageMessage() = Component.text("Użycie: /pcmd all/me <tekst>").color(NamedTextColor.RED)
+    fun usageMessage() = Component.text("Use: /pcmd all/me <tekst/legacy/tellarawjson>").color(NamedTextColor.RED)
 
     fun sanitzeText(text: Component): Component {
         // remove all events that can run commands
@@ -59,6 +59,13 @@ class PcmdCommand : Command("pcmd") {
     }
 
 
+    override fun tabComplete(sender: CommandSender, alias: String, args: Array<String>): MutableList<String> {
+        if (args.size == 1) {
+            return mutableListOf("all", "me")
+        }
+        return mutableListOf()
+    }
+
 
     override fun execute(sender: CommandSender, label: String, args: Array<String>): Boolean {
         if (sender !is Player) return false
@@ -68,8 +75,22 @@ class PcmdCommand : Command("pcmd") {
         }
 
         val selector = when(args[0]) {
-            "all" -> "@a[r=..100]"
-            "me" -> sender.name
+            "all" -> {
+                if (!sender.hasPermission(PCMD.PERMISSION_USE_ALL)) {
+                    sender.sendMessage(Component.text("To access 'all' you need at least role [Z]").color(NamedTextColor.RED))
+                    return true
+                }
+
+                "@a[distance=..100]"
+            }
+            "me" -> {
+                if (!sender.hasPermission(PCMD.PERMISSION_USE_ME)) {
+                    sender.sendMessage(Component.text("Access to pcmd is unavailable.").color(NamedTextColor.RED))
+                    return true
+                }
+
+                sender.name
+            }
             else -> {
                 sender.sendMessage(usageMessage())
                 return true
