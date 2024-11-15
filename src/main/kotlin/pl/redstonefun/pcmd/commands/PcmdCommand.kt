@@ -1,18 +1,16 @@
 package pl.redstonefun.pcmd.commands
 
-import com.google.gson.GsonBuilder
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.event.ClickEvent
+import net.kyori.adventure.text.event.HoverEvent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
-import org.bukkit.NamespacedKey
 import org.bukkit.command.Command
 import org.bukkit.Material
-import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.persistence.PersistentDataType
 import pl.redstonefun.pcmd.PCMD
 
@@ -25,16 +23,33 @@ class PcmdCommand : Command("pcmd") {
 
     fun usageMessage() = Component.text("Use: /pcmd all/me <text/legacy/tellarawjson>").color(NamedTextColor.RED)
 
-    fun sanitzeText(text: Component): Component {
+    fun sanitizeText(text: Component): Component {
         // remove all events that can run commands
-        text.clickEvent(null)
-        // TODO sanitze hover effect only if not text
-        text.hoverEvent(null)
-        for (event in text.children()) {
-            sanitzeText(event)
+        fun sanitizeComponent(text: Component): Component {
+            // Remove click events that run commands
+            val sanitizedClickEvent = text.clickEvent()?.takeIf {
+                it.action() != ClickEvent.Action.RUN_COMMAND
+            }
+
+            // Handle hover events
+            val sanitizedHoverEvent = text.hoverEvent()?.let { hover ->
+                if (hover.action() == HoverEvent.Action.SHOW_TEXT) {
+                    val sanitizedHoverValue = (hover.value() as? Component)?.let(::sanitizeComponent)
+                    if (sanitizedHoverValue != null) HoverEvent.showText(sanitizedHoverValue) else null
+                } else null
+            }
+
+            // Recursively sanitize children
+            val sanitizedChildren = text.children().map(::sanitizeComponent)
+
+            // Create and return a sanitized copy of the component
+            return text
+                .clickEvent(sanitizedClickEvent)
+                .hoverEvent(sanitizedHoverEvent)
+                .children(sanitizedChildren)
         }
 
-        return text
+        return sanitizeComponent(text)
     }
 
     fun getFromLegacyText(legacyText: String): Component? {
@@ -103,9 +118,9 @@ class PcmdCommand : Command("pcmd") {
         val legacyText = getFromLegacyText(rawText)
 
         val sanitizedMessage = if (jsonText != null) {
-            sanitzeText(jsonText)
+            sanitizeText(jsonText)
         } else if (legacyText != null) {
-            sanitzeText(legacyText)
+            sanitizeText(legacyText)
         } else {
             Component.text(rawText)
         }
