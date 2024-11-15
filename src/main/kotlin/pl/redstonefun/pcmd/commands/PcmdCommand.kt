@@ -68,7 +68,7 @@ class PcmdCommand : Command("pcmd") {
         }
 
         val selector = when(args[0]) {
-            "all" -> "@a[r=..100]"
+            "all" -> "@a[distance=..100]"
             "me" -> sender.name
             else -> {
                 sender.sendMessage(usageMessage())

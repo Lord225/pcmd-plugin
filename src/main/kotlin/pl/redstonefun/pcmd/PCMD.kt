@@ -16,12 +16,12 @@ class PCMD : JavaPlugin() {
 
     override fun onEnable() {
         server.pluginManager.apply {
-            registerEvents(BlockPlaceListener(this@PCMD), this@PCMD)
-            registerEvents(PlayerInteractListener(this@PCMD), this@PCMD)
+            registerEvents(BlockPlaceListener(), this@PCMD)
+            registerEvents(PlayerInteractListener(), this@PCMD)
         }
 
         getCommandMap().apply {
-            register("pcmd", PcmdCommand()
+            register("pcmd", PcmdCommand())
         }
 
         logger.info("Siema! Plugin działa.")

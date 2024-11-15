@@ -3,6 +3,17 @@ version: '1.0'
 main: pl.redstonefun.pcmd.PCMD
 api-version: '1.21'
 prefix: PCMD
-authors: [ BrzechiX ]
+authors: [ BrzechiX, Lord225 ]
 description: PCMD
 website: redstonefun.pl
+dependencies:
+  server:
+    RFCORE:
+      load: BEFORE
+      required: true
+      join-classpath: true
+  bootstrap:
+    RFCORE:
+      load: OMIT
+      required: true
+      join-classpath: true
