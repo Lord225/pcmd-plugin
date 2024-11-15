@@ -23,10 +23,14 @@ class PcmdCommand : Command("pcmd") {
 
     fun usageMessage() = Component.text("Use: /pcmd all/me <text/legacy/tellarawjson>").color(NamedTextColor.RED)
 
-    fun sanitizeText(text: Component): Component {
+    fun sanitizeText(text: Component, player: Player): Component {
         // remove all events that can run commands
         fun sanitizeComponent(text: Component): Component {
-            // Remove click events that run commands
+            // send message to player if there is a command
+            if (text.clickEvent()?.action() == ClickEvent.Action.RUN_COMMAND) {
+                player.sendMessage(Component.text("Yeah, that's not gonna happen.").color(NamedTextColor.RED))
+            }
+
             val sanitizedClickEvent = text.clickEvent()?.takeIf {
                 it.action() != ClickEvent.Action.RUN_COMMAND
             }
@@ -118,9 +122,9 @@ class PcmdCommand : Command("pcmd") {
         val legacyText = getFromLegacyText(rawText)
 
         val sanitizedMessage = if (jsonText != null) {
-            sanitizeText(jsonText)
+            sanitizeText(jsonText, sender)
         } else if (legacyText != null) {
-            sanitizeText(legacyText)
+            sanitizeText(legacyText, sender)
         } else {
             Component.text(rawText)
         }
