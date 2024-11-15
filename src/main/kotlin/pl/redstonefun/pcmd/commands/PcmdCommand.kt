@@ -21,6 +21,13 @@ class PcmdCommand : Command("pcmd") {
         usageMessage = "/pcmd all/me <text>"
     }
 
+    val DEDNY_PHRASES_1 = listOf(
+        "Pzurrhaps you should try again, meow!",
+        "That was a clawful attempt. Better luck next time, purrhaps",
+        "Paws off, that’s not going to work, nyan!",
+        "Yeah, that's not gonna happen.",
+    )
+
     fun usageMessage() = Component.text("Use: /pcmd all/me <text/legacy/tellarawjson>").color(NamedTextColor.RED)
 
     fun sanitizeText(text: Component, player: Player): Component {
@@ -28,7 +35,7 @@ class PcmdCommand : Command("pcmd") {
         fun sanitizeComponent(text: Component): Component {
             // send message to player if there is a command
             if (text.clickEvent()?.action() == ClickEvent.Action.RUN_COMMAND) {
-                player.sendMessage(Component.text("Yeah, that's not gonna happen.").color(NamedTextColor.RED))
+                player.sendMessage(Component.text(DEDNY_PHRASES_1.random()).color(NamedTextColor.RED))
             }
 
             val sanitizedClickEvent = text.clickEvent()?.takeIf {
@@ -96,7 +103,7 @@ class PcmdCommand : Command("pcmd") {
         val selector = when(args[0]) {
             "all" -> {
                 if (!sender.hasPermission(PCMD.PERMISSION_USE_ALL)) {
-                    sender.sendMessage(Component.text("To access 'all' you need at least role [Z]").color(NamedTextColor.RED))
+                    sender.sendMessage(Component.text("Sorry, you need the [Z] role to access 'all,' paws up if you have it!").color(NamedTextColor.RED))
                     return true
                 }
 
@@ -104,7 +111,7 @@ class PcmdCommand : Command("pcmd") {
             }
             "me" -> {
                 if (!sender.hasPermission(PCMD.PERMISSION_USE_ME)) {
-                    sender.sendMessage(Component.text("Access to pcmd is unavailable.").color(NamedTextColor.RED))
+                    sender.sendMessage(Component.text("Oops, PCMD is out of paws' reach right now. ").color(NamedTextColor.RED))
                     return true
                 }
 

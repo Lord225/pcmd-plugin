@@ -35,7 +35,7 @@ class PlayerInteractListener : Listener {
 
         if (event.action == Action.LEFT_CLICK_BLOCK) {
             if (event.player.name != user && event.player.hasPermission(PCMD.PERMISSION_USE_ALL).not()) {
-                event.player.sendMessage(Component.text("This pcmd block was created by $user").color(NamedTextColor.RED))
+                event.player.sendMessage(Component.text("Paws off! This PCMD block was made by $user, and you don't have claws to remove it. meow!").color(NamedTextColor.RED))
                 return
             }
 
