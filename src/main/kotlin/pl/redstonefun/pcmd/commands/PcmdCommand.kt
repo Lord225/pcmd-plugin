@@ -15,6 +15,7 @@ import org.bukkit.persistence.PersistentDataType
 import pl.redstonefun.pcmd.PCMD
 
 class PcmdCommand : Command("pcmd") {
+    val logger = PCMD().logger
 
     init {
         description = "Creates PCMD block"
@@ -146,7 +147,8 @@ class PcmdCommand : Command("pcmd") {
             }
         }
 
-        println("User ${sender.name} created PCMD: $command")
+
+        logger.info("User ${sender.name} created PCMD: $command")
 
         sender.inventory.addItem(item)
 

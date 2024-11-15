@@ -22,7 +22,7 @@ class BlockPlaceListener : Listener {
         val original = meta.persistentDataContainer.get(PCMD.PCMD_KEY_ORIGINAL, PersistentDataType.STRING) ?: return
 
         if(event.player.hasPermission(PCMD.PERMISSION_USE_ME).not()) {
-            player.sendMessage(Component.text("Access to pcmd is unavailable.").color(NamedTextColor.RED))
+            player.sendMessage(Component.text("Oops, PCMD is out of paws' reach right now.").color(NamedTextColor.RED))
             return
         }
 

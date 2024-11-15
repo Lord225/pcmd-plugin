@@ -17,12 +17,12 @@ import pl.redstonefun.pcmd.PCMD
 class PlayerInteractListener : Listener {
 
     fun feedbackMessage(originalCommand: String): Component {
-        val clickEvent = Component.text("Click to copy")
+        val clickEvent = Component.text("Click to copy command")
             .clickEvent(ClickEvent.copyToClipboard(originalCommand))
             .color(NamedTextColor.YELLOW)
             .decorate(TextDecoration.UNDERLINED)
 
-        return Component.text("pcmd block removed. ")
+        return Component.text("pcmd block removed, meow!")
                 .color(NamedTextColor.RED)
                 .append(clickEvent)
     }
