@@ -37,6 +37,7 @@ class PcmdCommand : Command("pcmd") {
             // send message to player if there is a command
             if (text.clickEvent()?.action() == ClickEvent.Action.RUN_COMMAND) {
                 player.sendMessage(Component.text(DEDNY_PHRASES_1.random()).color(NamedTextColor.RED))
+                logger.warning("User ${player.name} tried to use a command in PCMD: ${text.clickEvent()?.value()}")
             }
 
             val sanitizedClickEvent = text.clickEvent()?.takeIf {
