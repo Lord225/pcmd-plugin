@@ -22,7 +22,7 @@ class PcmdCommand : Command("pcmd") {
     }
 
     val DEDNY_PHRASES_1 = listOf(
-        "Pzurrhaps you should try again, meow!",
+        "Purrhaps you should try again, meow!",
         "That was a clawful attempt. Better luck next time, purrhaps",
         "Paws off, that’s not going to work, nyan!",
         "Yeah, that's not gonna happen.",
