@@ -21,7 +21,7 @@ class PCMD : JavaPlugin() {
         }
 
         getCommandMap().apply {
-            register("pcmd", PcmdCommand(this@PCMD))
+            register("pcmd", PcmdCommand()
         }
 
         logger.info("Siema! Plugin działa.")

@@ -16,11 +16,11 @@ import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.persistence.PersistentDataType
 import pl.redstonefun.pcmd.PCMD
 
-class PcmdCommand(private val plugin: PCMD) : Command("pcmd") {
+class PcmdCommand : Command("pcmd") {
 
     init {
-        description = "Sends a hello message to the player."
-        usageMessage = "/hello"
+        description = "Creates PCMD block"
+        usageMessage = "/pcmd all/me <tekst>"
     }
 
     fun usageMessage() = Component.text("Użycie: /pcmd all/me <tekst>").color(NamedTextColor.RED)

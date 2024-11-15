@@ -11,7 +11,7 @@ import org.bukkit.Material
 import pl.redstonefun.pcmd.PCMD
 
 
-class BlockPlaceListener(private val plugin: PCMD) : Listener {
+class BlockPlaceListener : Listener {
     @EventHandler
     fun onBlockPlace(event: BlockPlaceEvent) {
         println("BlockPlaceEvent $event");
