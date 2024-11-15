@@ -22,7 +22,7 @@ class PlayerInteractListener : Listener {
             .color(NamedTextColor.YELLOW)
             .decorate(TextDecoration.UNDERLINED)
 
-        return Component.text("pcmd block removed, meow!")
+        return Component.text("PCMD block removed!")
                 .color(NamedTextColor.RED)
                 .append(clickEvent)
     }

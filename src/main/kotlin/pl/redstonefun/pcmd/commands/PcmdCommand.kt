@@ -105,7 +105,7 @@ class PcmdCommand : Command("pcmd") {
         val selector = when(args[0]) {
             "all" -> {
                 if (!sender.hasPermission(PCMD.PERMISSION_USE_ALL)) {
-                    sender.sendMessage(Component.text("Sorry, you need the [Z] role to access 'all,' paws up if you have it!").color(NamedTextColor.RED))
+                    sender.sendMessage(Component.text("Sorry, you need the [Z] role to access 'all'.").color(NamedTextColor.RED))
                     return true
                 }
 
