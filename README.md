@@ -13,7 +13,7 @@ Usage: Create and manage your personal command blocks with various text formats,
 
 In JSON format you are allowed to use text decoration, hover events and links. So you can make pawsome logging for your machines. 
 
-## Examples
+## Examples 🐱
 ```
 /pcmd me &7 Hello World
 /pcmd all Hello, world!
