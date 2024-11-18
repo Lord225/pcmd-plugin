@@ -11,9 +11,9 @@ Usage: Create and manage your personal command blocks with various text formats,
 * me - gives you PCMD block with selector set to nick of player
 * all - gives you PCMD block with selector set to `@a[distance=..100]`
 
+In JSON format you are allowed to use text decoration, hover events and links. So you can make pawsome logging for your machines. 
 
 ## Examples
-In JSON format you can specify any 
 ```
 /pcmd me &7 Hello World
 /pcmd all Hello, world!
