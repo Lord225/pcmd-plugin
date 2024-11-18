@@ -21,7 +21,7 @@ class BlockPlaceListener : Listener {
         val command = meta.persistentDataContainer.get(PCMD.PCMD_KEY_TELLRAW, PersistentDataType.STRING) ?: return
         val original = meta.persistentDataContainer.get(PCMD.PCMD_KEY_ORIGINAL, PersistentDataType.STRING) ?: return
 
-        if(event.player.hasPermission(PCMD.PERMISSION_USE_ME).not()) {
+        if(!event.player.hasPermission(PCMD.PERMISSION_USE_ME)) {
             player.sendMessage(Component.text("Oops, PCMD is out of paws' reach right now.").color(NamedTextColor.RED))
             return
         }

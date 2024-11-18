@@ -29,7 +29,7 @@ class PcmdCommand : Command("pcmd") {
         "Yeah, that's not gonna happen.",
     )
 
-    fun usageMessage() = Component.text("Use: /pcmd all/me <text/legacy/tellarawjson>").color(NamedTextColor.RED)
+    fun usageMessage() = Component.text("Rawr, kitty got it wrong this time. Use: /pcmd all/me <text/legacy/tellarawjson>").color(NamedTextColor.RED)
 
     fun sanitizeText(text: Component, player: Player): Component {
         // remove all events that can run commands
@@ -105,7 +105,7 @@ class PcmdCommand : Command("pcmd") {
         val selector = when(args[0]) {
             "all" -> {
                 if (!sender.hasPermission(PCMD.PERMISSION_USE_ALL)) {
-                    sender.sendMessage(Component.text("Sorry, you need the [Z] role to access 'all,' paws up if you have it!").color(NamedTextColor.RED))
+                    sender.sendMessage(Component.text("Sorry, you need the [Z] role to access 'all', paws up if you have it!").color(NamedTextColor.RED))
                     return true
                 }
 

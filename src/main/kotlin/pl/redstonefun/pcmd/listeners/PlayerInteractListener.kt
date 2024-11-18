@@ -34,8 +34,13 @@ class PlayerInteractListener : Listener {
         val user = commandBlock.persistentDataContainer.get(PCMD.PCMD_KEY_USER, PersistentDataType.STRING) ?: return
 
         if (event.action == Action.LEFT_CLICK_BLOCK) {
-            if (event.player.name != user && event.player.hasPermission(PCMD.PERMISSION_USE_ALL).not()) {
+            if (event.player.name != user) {
                 event.player.sendMessage(Component.text("Paws off! This PCMD block was made by $user, and you don't have claws to remove it. meow!").color(NamedTextColor.RED))
+                return
+            }
+
+            if(!event.player.hasPermission(PCMD.PERMISSION_USE_ALL)) {
+                event.player.sendMessage(Component.text("Oops, PCMD is out of paws' reach right now."))
                 return
             }
 
