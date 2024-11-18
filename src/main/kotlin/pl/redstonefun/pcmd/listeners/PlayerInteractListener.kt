@@ -39,7 +39,7 @@ class PlayerInteractListener : Listener {
                 return
             }
 
-            if(!event.player.hasPermission(PCMD.PERMISSION_USE_ALL)) {
+            if(!event.player.hasPermission(PCMD.PERMISSION_USE_ME)) {
                 event.player.sendMessage(Component.text("Oops, PCMD is out of paws' reach right now."))
                 return
             }
